@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Human Activity Recognition
+    </title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+</head>
+
+
+<body>
+
+    <main class="app-container">
+
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <header class="top-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    AI-POWERED VIDEO ANALYSIS
+                </p>
+
+                <h1>
+                    Understand Human Activity
+                    <span>Through AI</span>
+                </h1>
+
+                <p class="subtitle">
+
+                    Upload a video and let our
+                    3D ResNet neural network
+                    analyze human movement
+                    and recognize the activity.
+
+                </p>
+
+            </div>
+
+
+            <div class="model-badge">
+
+                <div class="model-icon">
+                    ◈
+                </div>
+
+                <div>
+
+                    <strong>
+                        3D RESNET-18
+                    </strong>
+
+                    <small>
+                        Deep Learning Model
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN GRID
+        ====================================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- =================================================
+                 VIDEO INPUT CARD
+            ================================================== -->
+
+            <div class="card upload-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="step-number">
+                            01
+                        </span>
+
+                        <p class="section-label">
+                            VIDEO INPUT
+                        </p>
+
+                        <h2>
+                            Upload Activity Video
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Upload Area -->
+
+                <div id="uploadArea"
+                    class="upload-area">
+
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+
+                    <h3>
+                        Drop your video here
+                    </h3>
+
+
+                    <p>
+                        or click to browse from your device
+                    </p>
+
+
+                    <span class="supported-formats">
+
+                        MP4 • AVI • MOV • MKV
+
+                    </span>
+
+
+                    <button id="browseButton"
+                        class="browse-button">
+
+                        Browse Video
+
+                    </button>
+
+
+                    <input
+                        type="file"
+                        id="videoInput"
+                        accept="video/*"
+                        hidden>
+
+                </div>
+
+
+                <!-- Video Preview -->
+
+                <div id="previewContainer"
+                    class="preview-container">
+
+
+                    <video
+                        id="videoPreview"
+                        controls>
+
+                    </video>
+
+
+                    <div class="file-info">
+
+
+                        <div class="file-icon">
+                            ▶
+                        </div>
+
+
+                        <div class="file-details">
+
+                            <strong
+                                id="fileName">
+
+                            </strong>
+
+
+                            <small
+                                id="fileSize">
+
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            id="removeButton"
+                            class="remove-button">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Analyze Button -->
+
+                <button
+                    id="analyzeButton"
+                    class="analyze-button"
+                    disabled>
+
+
+                    <span>
+                        ✦
+                    </span>
+
+
+                    Analyze Activity
+
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ANALYSIS RESULT CARD
+            ================================================== -->
+
+            <div class="card result-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="step-number">
+                            02
+                        </span>
+
+                        <p class="section-label">
+                            AI ANALYSIS
+                        </p>
+
+                        <h2>
+                            Recognition Result
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMPTY STATE -->
+
+                <div id="resultEmpty"
+                    class="result-state active">
+
+
+                    <div class="empty-icon">
+                        ✦
+                    </div>
+
+
+                    <h3>
+                        Ready for Analysis
+                    </h3>
+
+
+                    <p>
+
+                        Upload a video and click
+                        <strong>
+                            Analyze Activity
+                        </strong>
+                        to begin.
+
+                    </p>
+
+                </div>
+
+
+                <!-- LOADING STATE -->
+
+                <div id="resultLoading"
+                    class="result-state">
+
+
+                    <div class="loader"></div>
+
+
+                    <h3>
+                        Analyzing Video
+                    </h3>
+
+
+                    <p>
+                        Our neural network is
+                        analyzing the movement...
+                    </p>
+
+                </div>
+
+
+                <!-- SUCCESS RESULT -->
+
+                <div id="resultSuccess"
+                    class="success-result">
+
+
+                    <!-- Success Header -->
+
+                    <div class="success-header">
+
+
+                        <div class="success-icon">
+                            ✓
+                        </div>
+
+
+                        <div>
+
+                            <span class="result-status">
+                                ANALYSIS COMPLETE
+                            </span>
+
+
+                            <h3>
+                                Primary Activity
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Main Activity -->
+
+                    <div class="primary-activity">
+
+
+                        <span>
+                            DETECTED ACTIVITY
+                        </span>
+
+
+                        <h2 id="activityResult">
+                            —
+                        </h2>
+
+                    </div>
+
+
+                    <!-- Confidence -->
+
+                    <div class="confidence-section">
+
+
+                        <div class="metric-header">
+
+                            <span>
+                                CONFIDENCE SCORE
+                            </span>
+
+
+                            <strong
+                                id="confidenceValue">
+
+                                0%
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="confidence-bar">
+
+                            <div
+                                id="confidenceFill"
+                                class="confidence-fill">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="reliability-row">
+
+                            <span>
+                                Prediction Reliability
+                            </span>
+
+
+                            <strong
+                                id="reliabilityValue">
+
+                                —
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Top Predictions -->
+
+                    <div class="analysis-section">
+
+
+                        <div class="section-title">
+
+                            <span>
+                                TOP PREDICTIONS
+                            </span>
+
+
+                            <span>
+                                AI RANKING
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="topPredictions"
+                            class="prediction-list">
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Video Analysis -->
+
+                    <div class="analysis-section">
+
+
+                        <div class="section-title">
+
+                            <span>
+                                VIDEO ANALYSIS
+                            </span>
+
+                            <span>
+                                DETAILS
+                            </span>
+
+                        </div>
+
+
+                        <div class="stats-grid">
+
+
+                            <div class="stat-item">
+
+                                <span>
+                                    Duration
+                                </span>
+
+
+                                <strong
+                                    id="videoDuration">
+
+                                    —
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat-item">
+
+                                <span>
+                                    Frames Analyzed
+                                </span>
+
+
+                                <strong
+                                    id="framesAnalyzed">
+
+                                    —
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat-item">
+
+                                <span>
+                                    Frame Rate
+                                </span>
+
+
+                                <strong
+                                    id="videoFPS">
+
+                                    —
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat-item">
+
+                                <span>
+                                    Processing Time
+                                </span>
+
+
+                                <strong
+                                    id="processingTime">
+
+                                    —
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AI Summary -->
+
+                    <div class="analysis-summary">
+
+
+                        <div class="summary-icon">
+                            ✦
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                AI ANALYSIS SUMMARY
+                            </span>
+
+
+                            <p
+                                id="analysisSummary">
+
+                                —
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Model Footer -->
+
+                    <div class="model-footer">
+
+
+                        <span>
+                            MODEL
+                        </span>
+
+
+                        <strong>
+                            3D ResNet-18
+                        </strong>
+
+
+                        <span>
+                            DEVICE
+                        </span>
+
+
+                        <strong
+                            id="modelDevice">
+
+                            —
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="app-footer">
+
+            <span>
+                POWERED BY PYTORCH & 3D RESNET
+            </span>
+
+
+            <span>
+                HUMAN ACTIVITY RECOGNITION SYSTEM
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
